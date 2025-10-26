@@ -62,7 +62,7 @@ services:
       - dawarich_watched:/var/app/tmp/imports/watched
       - dawarich_storage:/var/app/storage
       - dawarich_db_data:/dawarich_db_data
-    command: ["bin/rails", "server", "-b", "127.0.0.1", "-p", "3001"]
+    command: ["bin/rails", "server", "-b", "127.0.0.1", "-p", "3000"]
     environment:
       RAILS_ENV: development
       REDIS_URL: redis://dawarich_redis:6379
@@ -71,11 +71,10 @@ services:
       DATABASE_PASSWORD: password
       DATABASE_NAME: dawarich_development
       APPLICATION_HOSTS: "localhost,dawarich.yourdomainname.xxx"
-      TIME_ZONE: Europe/Brussels
+      TIME_ZONE: 
       APPLICATION_PROTOCOL: http
       SELF_HOSTED: "true"
       STORE_GEODATA: "true"
-      LOCATIONIQ_API_KEY: "pk.c01641f72c20dc7aa0826acb7c35761b"
     depends_on:
       - dawarich_db
       - dawarich_redis
@@ -86,7 +85,7 @@ services:
     image: tailscale/tailscale:latest
     container_name: tailscale-dawarich
     environment:
-      - TS_AUTHKEY=tskey-auth-REPLACE-ME
+      - TS_AUTHKEY= xxx
       - TS_STATE_DIR=/var/lib/tailscale
       - TS_HOSTNAME=dawarich
     cap_add:
@@ -114,12 +113,14 @@ services:
 
 ```
 
-2. Vervang in de stack je **Tailscale-authkey** (`TS_AUTHKEY=`).  
-3. Start alles met:
+2. Vervang in de stack je **Tailscale-authkey** (`TS_AUTHKEY=`).
+3. vervang uw domeinnaam door deze van tailscale
+4. vul uw tijdzone in
+5. Start alles met:
    ```bash
    docker compose up -d
    ```
-4. Binnen enkele seconden is de app publiek bereikbaar via je Tailscale URL.
+6. Binnen enkele seconden is de app publiek bereikbaar via je Tailscale URL.
 
 ---
 
@@ -134,7 +135,7 @@ services:
 ## 🔧 Troubleshooting
 
 **Fout:** `connection refused`  
-➡ Controleer of de app luistert op `127.0.0.1:3001` binnen de container.
+➡ Controleer of de app luistert op `127.0.0.1:3000` binnen de container.
 
 **Fout:** `Funnel not available; "funnel" node attribute not set`  
 ➡ Voeg `"attr": ["funnel"]` toe aan je `nodeAttrs` in de ACL.
