@@ -105,7 +105,7 @@ services:
         echo '🔑 Logging in...' &&
         tailscale up --authkey=${TS_AUTHKEY} --hostname=dawarich --accept-routes --accept-dns=false --advertise-tags=tag:dawarich &&
         echo '🌍 Enabling public HTTPS funnel...' &&
-        tailscale funnel 127.0.0.1:3001 --bg &&
+        tailscale funnel 127.0.0.1:3000 --bg &&
         echo '✅ Funnel active. Ready on https://dawarich.yourdomainname.xxx' &&
         tail -f /dev/null
       "
